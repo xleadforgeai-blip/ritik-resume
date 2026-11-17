@@ -1,0 +1,781 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Ritik — Student. Builder. Founder in the Making.</title>
+  <!-- Google Fonts for Personality & Readability -->
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700&family=Space+Grotesk:wght@600;700&display=swap" rel="stylesheet" />
+
+  <style>
+    /* ==========================================================================
+       1. CSS VARIABLES & GLOBAL RESET (Consistent Color Palette & Typography)
+       ========================================================================== */
+    :root {
+      --bg-primary: #0b0f19;
+      --bg-secondary: #111827;
+      --bg-card: rgba(23, 31, 50, 0.78);
+      --border-subtle: rgba(255, 255, 255, 0.1);
+      --border-hover: rgba(139, 92, 246, 0.55);
+
+      --text-main: #f8fafc;
+      --text-muted: #94a3b8;
+      --text-dim: #64748b;
+
+      --accent-violet: #8b5cf6;
+      --accent-cyan: #06b6d4;
+      --accent-fuchsia: #ec4899;
+      --accent-emerald: #10b981;
+      --accent-amber: #f59e0b;
+
+      --font-heading: 'Space Grotesk', sans-serif;
+      --font-body: 'Plus Jakarta Sans', sans-serif;
+
+      --radius-lg: 20px;
+      --radius-md: 12px;
+      --radius-pill: 999px;
+      --shadow-card: 0 18px 40px -15px rgba(0, 0, 0, 0.6);
+    }
+
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    html {
+      scroll-behavior: smooth;
+    }
+
+    /* Element Selectors */
+    body {
+      font-family: var(--font-body);
+      background-color: var(--bg-primary);
+      background-image:
+        radial-gradient(circle at 12% 10%, rgba(139, 92, 246, 0.18), transparent 35%),
+        radial-gradient(circle at 88% 18%, rgba(6, 182, 212, 0.16), transparent 35%),
+        radial-gradient(circle at 50% 85%, rgba(236, 72, 153, 0.12), transparent 40%);
+      color: var(--text-main);
+      line-height: 1.65;
+      min-height: 100vh;
+    }
+
+    h1, h2, h3, h4 {
+      font-family: var(--font-heading);
+      line-height: 1.2;
+      letter-spacing: -0.02em;
+    }
+
+    a {
+      color: inherit;
+      text-decoration: none;
+    }
+
+    ul {
+      list-style: none;
+    }
+
+    /* ==========================================================================
+       2. LAYOUT CONTAINER & UTILITY CLASSES
+       ========================================================================== */
+    .container {
+      width: 100%;
+      max-width: 1120px;
+      margin: 0 auto;
+      padding: 0 24px;
+    }
+
+    .section {
+      padding: 72px 0 24px;
+    }
+
+    .section-header {
+      margin-bottom: 28px;
+    }
+
+    .section-tag {
+      display: inline-block;
+      font-size: 0.78rem;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.1em;
+      color: var(--accent-cyan);
+      margin-bottom: 8px;
+    }
+
+    .section-title {
+      font-size: clamp(1.75rem, 3vw, 2.35rem);
+      color: var(--text-main);
+    }
+
+    .gradient-text {
+      background: linear-gradient(135deg, #c084fc 0%, #38bdf8 50%, #34d399 100%);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+    }
+
+    /* ==========================================================================
+       3. STICKY NAVIGATION BAR (Flexbox & Positioning)
+       ========================================================================== */
+    #navbar {
+      position: sticky;
+      top: 0;
+      z-index: 1000;
+      background: rgba(11, 15, 25, 0.82);
+      backdrop-filter: blur(14px);
+      border-bottom: 1px solid var(--border-subtle);
+    }
+
+    .nav-inner {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      height: 70px;
+    }
+
+    .brand-logo {
+      font-family: var(--font-heading);
+      font-size: 1.4rem;
+      font-weight: 700;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+
+    .brand-dot {
+      width: 11px;
+      height: 11px;
+      border-radius: 50%;
+      background: linear-gradient(135deg, var(--accent-violet), var(--accent-cyan));
+      box-shadow: 0 0 12px var(--accent-cyan);
+    }
+
+    .nav-links {
+      display: flex;
+      align-items: center;
+      gap: 28px;
+    }
+
+    .nav-links a {
+      font-size: 0.92rem;
+      font-weight: 500;
+      color: var(--text-muted);
+      transition: color 0.2s ease;
+    }
+
+    .nav-links a:hover {
+      color: var(--text-main);
+    }
+
+    .nav-cta {
+      padding: 9px 18px;
+      border-radius: var(--radius-pill);
+      background: linear-gradient(135deg, var(--accent-violet), var(--accent-cyan));
+      color: #ffffff !important;
+      font-weight: 600 !important;
+      font-size: 0.88rem;
+      transition: transform 0.2s ease, box-shadow 0.2s ease;
+    }
+
+    .nav-cta:hover {
+      transform: translateY(-1px);
+      box-shadow: 0 8px 20px rgba(139, 92, 246, 0.4);
+    }
+
+    /* ==========================================================================
+       4. HERO SECTION (ID Selector + Flexbox Alignment)
+       ========================================================================== */
+    #hero {
+      padding: 84px 0 48px;
+    }
+
+    .hero-box {
+      background: linear-gradient(145deg, rgba(23, 31, 50, 0.9), rgba(15, 23, 42, 0.95));
+      border: 1px solid var(--border-subtle);
+      border-radius: 28px;
+      padding: 52px 44px;
+      box-shadow: var(--shadow-card);
+      position: relative;
+      overflow: hidden;
+    }
+
+    .hero-box::before {
+      content: "";
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      height: 4px;
+      background: linear-gradient(90deg, var(--accent-violet), var(--accent-cyan), var(--accent-fuchsia), var(--accent-amber));
+    }
+
+    .status-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      padding: 6px 14px;
+      border-radius: var(--radius-pill);
+      background: rgba(16, 185, 129, 0.14);
+      border: 1px solid rgba(16, 185, 129, 0.35);
+      color: #6ee7b7;
+      font-size: 0.82rem;
+      font-weight: 600;
+      margin-bottom: 20px;
+    }
+
+    .status-dot {
+      width: 8px;
+      height: 8px;
+      border-radius: 50%;
+      background-color: var(--accent-emerald);
+    }
+
+    .hero-title {
+      font-size: clamp(2.4rem, 5vw, 3.8rem);
+      margin-bottom: 12px;
+    }
+
+    .hero-tagline {
+      font-size: clamp(1.15rem, 2.2vw, 1.5rem);
+      font-weight: 600;
+      color: #cbd5e1;
+      margin-bottom: 20px;
+    }
+
+    .hero-subtext {
+      max-width: 680px;
+      color: var(--text-muted);
+      font-size: 1.02rem;
+      margin-bottom: 32px;
+    }
+
+    .hero-actions {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 14px;
+    }
+
+    .btn {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 8px;
+      padding: 13px 24px;
+      border-radius: var(--radius-md);
+      font-weight: 600;
+      font-size: 0.95rem;
+      cursor: pointer;
+      border: none;
+      transition: all 0.25s ease;
+    }
+
+    .btn-primary {
+      background: linear-gradient(135deg, var(--accent-violet), var(--accent-cyan));
+      color: #ffffff;
+      box-shadow: 0 10px 25px -8px rgba(139, 92, 246, 0.6);
+    }
+
+    .btn-primary:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 14px 30px -6px rgba(6, 182, 212, 0.55);
+    }
+
+    .btn-secondary {
+      background: rgba(255, 255, 255, 0.05);
+      color: var(--text-main);
+      border: 1px solid var(--border-subtle);
+    }
+
+    .btn-secondary:hover {
+      background: rgba(255, 255, 255, 0.1);
+      border-color: rgba(255, 255, 255, 0.25);
+    }
+
+    /* ==========================================================================
+       5. CARDS & CSS GRID LAYOUTS (Who I Am, Quick Facts, What Drives Me)
+       ========================================================================== */
+    .grid-2 {
+      display: grid;
+      grid-template-columns: 1.35fr 1fr;
+      gap: 24px;
+    }
+
+    .grid-3 {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 20px;
+    }
+
+    .card {
+      background: var(--bg-card);
+      border: 1px solid var(--border-subtle);
+      border-radius: var(--radius-lg);
+      padding: 30px;
+      box-shadow: var(--shadow-card);
+      transition: transform 0.25s ease, border-color 0.25s ease;
+    }
+
+    .card:hover {
+      transform: translateY(-4px);
+      border-color: var(--border-hover);
+    }
+
+    .card-accent-top {
+      border-top: 3px solid var(--accent-violet);
+    }
+
+    .card-accent-cyan {
+      border-top: 3px solid var(--accent-cyan);
+    }
+
+    .card-accent-amber {
+      border-top: 3px solid var(--accent-amber);
+    }
+
+    .card h3 {
+      font-size: 1.35rem;
+      margin-bottom: 14px;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+
+    .card p {
+      color: var(--text-muted);
+      margin-bottom: 14px;
+    }
+
+    .card p:last-child {
+      margin-bottom: 0;
+    }
+
+    /* Quick Facts List Styling */
+    .facts-list {
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+      margin-top: 8px;
+    }
+
+    .fact-item {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 12px 14px;
+      background: rgba(11, 15, 25, 0.65);
+      border: 1px solid rgba(255, 255, 255, 0.06);
+      border-radius: var(--radius-md);
+      font-size: 0.92rem;
+    }
+
+    .fact-label {
+      color: var(--text-dim);
+      font-weight: 600;
+    }
+
+    .fact-value {
+      color: var(--text-main);
+      font-weight: 600;
+      text-align: right;
+    }
+
+    /* ==========================================================================
+       6. LEADFORGE AI FEATURE SECTION
+       ========================================================================== */
+    .venture-banner {
+      background: linear-gradient(135deg, rgba(139, 92, 246, 0.16), rgba(6, 182, 212, 0.14));
+      border: 1px solid rgba(139, 92, 246, 0.35);
+      border-radius: var(--radius-lg);
+      padding: 34px;
+      margin-bottom: 24px;
+    }
+
+    .venture-header {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: space-between;
+      align-items: center;
+      gap: 14px;
+      margin-bottom: 14px;
+    }
+
+    .venture-badge {
+      padding: 5px 12px;
+      border-radius: var(--radius-pill);
+      background: rgba(236, 72, 153, 0.18);
+      border: 1px solid rgba(236, 72, 153, 0.4);
+      color: #f9a8d4;
+      font-size: 0.8rem;
+      font-weight: 700;
+    }
+
+    .step-number {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      width: 34px;
+      height: 34px;
+      border-radius: 10px;
+      background: linear-gradient(135deg, var(--accent-violet), var(--accent-cyan));
+      color: #fff;
+      font-family: var(--font-heading);
+      font-weight: 700;
+      font-size: 0.95rem;
+      margin-bottom: 14px;
+    }
+
+    /* ==========================================================================
+       7. SKILLS & AI AUTOMATION STACK
+       ========================================================================== */
+    .skills-wrapper {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 12px;
+      margin-top: 16px;
+    }
+
+    .skill-tag {
+      padding: 10px 16px;
+      border-radius: var(--radius-pill);
+      font-size: 0.88rem;
+      font-weight: 600;
+      background: rgba(255, 255, 255, 0.05);
+      border: 1px solid var(--border-subtle);
+      color: var(--text-main);
+      transition: all 0.2s ease;
+    }
+
+    .skill-tag:hover {
+      transform: translateY(-2px);
+      border-color: var(--accent-cyan);
+      background: rgba(6, 182, 212, 0.14);
+    }
+
+    .skill-ai {
+      border-color: rgba(139, 92, 246, 0.45);
+      background: rgba(139, 92, 246, 0.14);
+      color: #ddd6fe;
+    }
+
+    .skill-data {
+      border-color: rgba(16, 185, 129, 0.45);
+      background: rgba(16, 185, 129, 0.14);
+      color: #a7f3d0;
+    }
+
+    .skill-web {
+      border-color: rgba(245, 158, 11, 0.45);
+      background: rgba(245, 158, 11, 0.14);
+      color: #fde68a;
+    }
+
+    /* ==========================================================================
+       8. CONTACT SECTION & FORM STYLING
+       ========================================================================== */
+    .contact-grid {
+      display: grid;
+      grid-template-columns: 1fr 1.2fr;
+      gap: 28px;
+      align-items: start;
+    }
+
+    .form-group {
+      margin-bottom: 16px;
+    }
+
+    .form-group label {
+      display: block;
+      font-size: 0.86rem;
+      font-weight: 600;
+      color: var(--text-muted);
+      margin-bottom: 6px;
+    }
+
+    .form-control {
+      width: 100%;
+      padding: 12px 14px;
+      border-radius: var(--radius-md);
+      border: 1px solid var(--border-subtle);
+      background: rgba(11, 15, 25, 0.8);
+      color: var(--text-main);
+      font-family: var(--font-body);
+      font-size: 0.95rem;
+      outline: none;
+      transition: border-color 0.2s ease;
+    }
+
+    .form-control:focus {
+      border-color: var(--accent-cyan);
+    }
+
+    textarea.form-control {
+      min-height: 110px;
+      resize: vertical;
+    }
+
+    /* ==========================================================================
+       9. FOOTER
+       ========================================================================== */
+    footer {
+      margin-top: 72px;
+      padding: 28px 0;
+      border-top: 1px solid var(--border-subtle);
+      text-align: center;
+      color: var(--text-muted);
+      font-size: 0.9rem;
+    }
+
+    /* ==========================================================================
+       10. RESPONSIVE MEDIA QUERIES
+       ========================================================================== */
+    @media (max-width: 860px) {
+      .grid-2,
+      .grid-3,
+      .contact-grid {
+        grid-template-columns: 1fr;
+      }
+
+      .hero-box {
+        padding: 36px 24px;
+      }
+
+      .nav-links {
+        gap: 16px;
+      }
+    }
+
+    @media (max-width: 560px) {
+      .nav-links a:not(.nav-cta) {
+        display: none;
+      }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- STICKY NAVIGATION BAR -->
+  <header id="navbar">
+    <div class="container nav-inner">
+      <a href="#hero" class="brand-logo">
+        <span class="brand-dot"></span>
+        <span>Ritik.</span>
+      </a>
+      <nav class="nav-links" aria-label="Primary Navigation">
+        <a href="#about">Who I Am</a>
+        <a href="#work">What I Do</a>
+        <a href="#mindset">What Drives Me</a>
+        <a href="#skills">Skills</a>
+        <a href="#contact" class="nav-cta">Get in Touch</a>
+      </nav>
+    </div>
+  </header>
+
+  <main class="container">
+
+    <!-- HERO SECTION -->
+    <section id="hero">
+      <div class="hero-box">
+        <div class="status-badge">
+          <span class="status-dot"></span>
+          <span>Building LeadForge AI • BBA (DBE) @ IIM Bangalore</span>
+        </div>
+        <h1 class="hero-title">Hi, I'm <span class="gradient-text">Ritik</span></h1>
+        <p class="hero-tagline">Student. Builder. Founder in the making.</p>
+        <p class="hero-subtext">
+          19-year-old digital business student from Delhi turning daily execution into scalable AI automation systems for real estate and solar businesses.
+        </p>
+        <div class="hero-actions">
+          <a href="#work" class="btn btn-primary">Explore LeadForge AI</a>
+          <a href="#contact" class="btn btn-secondary">Get in Touch</a>
+        </div>
+      </div>
+    </section>
+
+    <!-- WHO I AM & QUICK FACTS SECTION -->
+    <section id="about" class="section">
+      <div class="section-header">
+        <span class="section-tag">Introduction</span>
+        <h2 class="section-title">Who I Am &amp; Quick Facts</h2>
+      </div>
+
+      <div class="grid-2">
+        <article class="card card-accent-top">
+          <h3>Who I Am</h3>
+          <p>
+            I am Ritik, a 19 year old BBA student in Digital Business and Entrepreneurship at <strong>IIM Bangalore</strong>. I grew up in <strong>Delhi</strong>, studied commerce in school, and decided early that I wanted to build businesses rather than only study them.
+          </p>
+          <p>
+            Combining business fundamentals with hands-on AI automations, data analytics, and web design, I focus on solving real operational bottlenecks for growing companies.
+          </p>
+        </article>
+
+        <aside class="card card-accent-cyan">
+          <h3>Quick Facts</h3>
+          <ul class="facts-list">
+            <li class="fact-item">
+              <span class="fact-label">Location</span>
+              <span class="fact-value">Delhi, India</span>
+            </li>
+            <li class="fact-item">
+              <span class="fact-label">Studying</span>
+              <span class="fact-value">BBA (DBE), IIM Bangalore</span>
+            </li>
+            <li class="fact-item">
+              <span class="fact-label">Building</span>
+              <span class="fact-value">LeadForge AI</span>
+            </li>
+            <li class="fact-item">
+              <span class="fact-label">Learning</span>
+              <span class="fact-value">Data analytics, web design, communication</span>
+            </li>
+            <li class="fact-item">
+              <span class="fact-label">Goal</span>
+              <span class="fact-value">Build a scalable business</span>
+            </li>
+          </ul>
+        </aside>
+      </div>
+    </section>
+
+    <!-- WHAT I DO (LEADFORGE AI) SECTION -->
+    <section id="work" class="section">
+      <div class="section-header">
+        <span class="section-tag">Venture &amp; Projects</span>
+        <h2 class="section-title">What I Do</h2>
+      </div>
+
+      <div class="venture-banner">
+        <div class="venture-header">
+          <h3>LeadForge AI — Automated Growth Systems</h3>
+          <span class="venture-badge">Real Estate &amp; Solar Automation</span>
+        </div>
+        <p style="color: #cbd5e1; max-width: 820px;">
+          I run <strong>LeadForge AI</strong>, an automation project for real estate and solar businesses. We help them capture more enquiries, follow up on time and book more demos, so fewer leads are wasted. Alongside this, I am building skills in data analytics (Excel, Power BI and Python) and web design with HTML and CSS.
+        </p>
+      </div>
+
+      <div class="grid-3">
+        <div class="card">
+          <div class="step-number">01</div>
+          <h3>Capture More Enquiries</h3>
+          <p>Automated multi-channel lead capture workflows that instantly log and qualify incoming real estate and solar prospects 24/7.</p>
+        </div>
+
+        <div class="card">
+          <div class="step-number">02</div>
+          <h3>Follow Up On Time</h3>
+          <p>AI-driven instant follow-up sequences across WhatsApp, email, and CRM pipelines so zero warm leads slip through the cracks.</p>
+        </div>
+
+        <div class="card">
+          <div class="step-number">03</div>
+          <h3>Book More Demos</h3>
+          <p>Smart calendar routing and automated reminders that convert enquiries directly into confirmed sales demos.</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- WHAT DRIVES ME SECTION -->
+    <section id="mindset" class="section">
+      <div class="section-header">
+        <span class="section-tag">Operating Philosophy</span>
+        <h2 class="section-title">What Drives Me</h2>
+      </div>
+
+      <div class="card card-accent-amber">
+        <h3>Consistent Daily Action Over Big Plans</h3>
+        <p>
+          I believe results come from consistent daily action, not big plans. I work on my projects every day, track what I do, and fix what does not work. My goal is to build a company that scales and creates real value for its customers.
+        </p>
+      </div>
+    </section>
+
+    <!-- SKILLS & AI AUTOMATION STACK SECTION -->
+    <section id="skills" class="section">
+      <div class="section-header">
+        <span class="section-tag">Capabilities</span>
+        <h2 class="section-title">AI Automations &amp; Core Skills</h2>
+      </div>
+
+      <div class="card">
+        <p>
+          Specialized in end-to-end <strong>AI automations</strong> alongside data analytics, web development, and digital entrepreneurship:
+        </p>
+        <div class="skills-wrapper">
+          <span class="skill-tag skill-ai">AI Workflow Automation</span>
+          <span class="skill-tag skill-ai">AI Lead Generation Systems</span>
+          <span class="skill-tag skill-ai">Make / Zapier / n8n</span>
+          <span class="skill-tag skill-ai">AI Chatbots &amp; Voice Agents</span>
+          <span class="skill-tag skill-ai">CRM &amp; WhatsApp Automation</span>
+          <span class="skill-tag skill-ai">Prompt Engineering</span>
+          <span class="skill-tag skill-data">Excel</span>
+          <span class="skill-tag skill-data">Power BI</span>
+          <span class="skill-tag skill-data">Python</span>
+          <span class="skill-tag skill-web">HTML5</span>
+          <span class="skill-tag skill-web">CSS3 &amp; Responsive Design</span>
+          <span class="skill-tag">Digital Business &amp; Entrepreneurship</span>
+          <span class="skill-tag">Communication</span>
+        </div>
+      </div>
+    </section>
+
+    <!-- GET IN TOUCH SECTION -->
+    <section id="contact" class="section">
+      <div class="section-header">
+        <span class="section-tag">Connect</span>
+        <h2 class="section-title">Get in Touch</h2>
+      </div>
+
+      <div class="contact-grid">
+        <div class="card">
+          <h3>Let's Build Something Scalable</h3>
+          <p>
+            Whether you want to automate lead follow-ups for your real estate or solar business, collaborate on an AI project, or connect around startups and digital business, feel free to reach out.
+          </p>
+          <ul class="facts-list" style="margin-top: 20px;">
+            <li class="fact-item">
+              <span class="fact-label">Base</span>
+              <span class="fact-value">Delhi, India</span>
+            </li>
+            <li class="fact-item">
+              <span class="fact-label">Project</span>
+              <span class="fact-value">LeadForge AI</span>
+            </li>
+            <li class="fact-item">
+              <span class="fact-label">University</span>
+              <span class="fact-value">IIM Bangalore (BBA DBE)</span>
+            </li>
+          </ul>
+        </div>
+
+        <form class="card" onsubmit="event.preventDefault(); alert('Thanks for reaching out to Ritik!');">
+          <div class="form-group">
+            <label for="name">Your Name</label>
+            <input type="text" id="name" class="form-control" placeholder="Enter your name" required />
+          </div>
+          <div class="form-group">
+            <label for="email">Your Email</label>
+            <input type="email" id="email" class="form-control" placeholder="Enter your email" required />
+          </div>
+          <div class="form-group">
+            <label for="message">Message</label>
+            <textarea id="message" class="form-control" placeholder="Tell me about your project or idea..." required></textarea>
+          </div>
+          <button type="submit" class="btn btn-primary" style="width: 100%;">Send Message</button>
+        </form>
+      </div>
+    </section>
+
+  </main>
+
+  <!-- FOOTER -->
+  <footer>
+    <div class="container">
+      <p>© 2026 Ritik. Built with HTML and CSS.</p>
+    </div>
+  </footer>
+
+</body>
+</html>
